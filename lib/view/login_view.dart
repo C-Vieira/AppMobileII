@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
@@ -79,7 +78,7 @@ class LoginView extends StatelessWidget {
                   onPressed: () {},
                   child: Text("Cadastrar Conta"),
                 ),
-
+                SizedBox(width: 12.0,),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade800,
@@ -98,8 +97,10 @@ class LoginView extends StatelessWidget {
        *  Floating Action Button
        */
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.question_mark_sharp),
+        onPressed: () {
+          Navigator.pushNamed(context, 'about');
+        },
+        child: Icon(Icons.question_mark_sharp, color: Colors.blue.shade800,),
       ),
     );
   }
