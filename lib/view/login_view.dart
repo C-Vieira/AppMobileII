@@ -85,7 +85,9 @@ class LoginView extends StatelessWidget {
                     foregroundColor: Colors.white,
                     minimumSize: Size(100, 50), textStyle: TextStyle(fontSize: 15.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'recover');
+                  },
                   child: Text("Recuperar Senha"),
                 ),
               ],
