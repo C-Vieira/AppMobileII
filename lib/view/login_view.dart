@@ -19,6 +19,7 @@ class LoginView extends StatelessWidget {
        */
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 50, 30, 30),
+
         child: Column(
           children: [
             /*
@@ -59,7 +60,9 @@ class LoginView extends StatelessWidget {
                 foregroundColor: Colors.white,
                 minimumSize: Size(400, 50), textStyle: TextStyle(fontSize: 16.0),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, 'home');
+              },
               child: Text("Fazer Login"),
             ),
             SizedBox(height: 20.0), 
@@ -75,7 +78,9 @@ class LoginView extends StatelessWidget {
                     foregroundColor: Colors.white,
                     minimumSize: Size(100, 50), textStyle: TextStyle(fontSize: 15.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'register');
+                  },
                   child: Text("Cadastrar Conta"),
                 ),
                 SizedBox(width: 12.0,),
