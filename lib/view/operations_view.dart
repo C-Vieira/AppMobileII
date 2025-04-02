@@ -27,7 +27,33 @@ class _OperationsViewState extends State<OperationsView> {
 
         child: Column(
           children: [
-
+            Text("Selecione das Opções Abaixo: ", style: TextStyle(fontSize: 20)),
+            SizedBox(height: 20.0,),
+              /*
+              *  Add new Book Button
+              */
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue.shade800,
+                  foregroundColor: Colors.white,
+                  minimumSize: Size(400, 50), textStyle: TextStyle(fontSize: 16.0),
+                ),
+                onPressed: () {},
+                child: Text("Adicionar Livro"),
+              ),
+              SizedBox(height: 20.0,),
+              /*
+              *  View Books Button
+              */
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue.shade800,
+                  foregroundColor: Colors.white,
+                  minimumSize: Size(400, 50), textStyle: TextStyle(fontSize: 16.0),
+                ),
+                onPressed: () {},
+                child: Text("Visualizar Livros"),
+              ),
           ],
         )
       )
