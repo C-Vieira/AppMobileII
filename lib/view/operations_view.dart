@@ -38,7 +38,9 @@ class _OperationsViewState extends State<OperationsView> {
                   foregroundColor: Colors.white,
                   minimumSize: Size(400, 50), textStyle: TextStyle(fontSize: 16.0),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'addBook');
+                },
                 child: Text("Adicionar Livro"),
               ),
               SizedBox(height: 20.0,),
@@ -51,7 +53,9 @@ class _OperationsViewState extends State<OperationsView> {
                   foregroundColor: Colors.white,
                   minimumSize: Size(400, 50), textStyle: TextStyle(fontSize: 16.0),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'viewBooks');
+                },
                 child: Text("Visualizar Livros"),
               ),
           ],
