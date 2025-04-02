@@ -1,12 +1,19 @@
+import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:app_mobile2/view/about_view.dart';
 import 'package:app_mobile2/view/home_view.dart';
 import 'package:app_mobile2/view/login_view.dart';
+import 'package:app_mobile2/view/operations_view.dart';
 import 'package:app_mobile2/view/recover_password_view.dart';
 import 'package:app_mobile2/view/register_view.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
+final g = GetIt.instance;
 
 void main() {
+  g.registerSingleton<BookController>(BookController());  
+
   runApp(
     DevicePreview(
       enabled: true,
@@ -30,6 +37,7 @@ class MainApp extends StatelessWidget {
         'recover' : (context) => const RecoverPasswordView(),
         'register' : (context) => const RegisterView(),
         'home' : (context) => const HomeView(),
+        'operations' : (context) => const OperationsView(),
       },
     );
   }

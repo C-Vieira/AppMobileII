@@ -92,6 +92,7 @@ class _RegisterViewState extends State<RegisterView> {
               *  Password Input Field
               */
               TextFormField(
+                obscureText: true,
                 style: TextStyle(fontSize: 20),
                 decoration: InputDecoration(
                   labelText: "Senha",
@@ -110,6 +111,7 @@ class _RegisterViewState extends State<RegisterView> {
               *  Confirm Password Input Field
               */
               TextFormField(
+                obscureText: true,
                 style: TextStyle(fontSize: 20),
                 decoration: InputDecoration(
                   labelText: "Confirmar Senha",

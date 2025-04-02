@@ -60,6 +60,7 @@ class _LoginViewState extends State<LoginView>{
               *  Password Input Field
               */
               TextFormField(
+                obscureText: true,
                 style: TextStyle(fontSize: 20),
                 decoration: InputDecoration(
                   labelText: "Senha",
