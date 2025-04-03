@@ -146,6 +146,7 @@ class _AddBookViewState extends State<AddBookView> {
                   onPressed: () {
                     if(_formKey.currentState!.validate()){
                       ctrl.addBook(title, subtitle, descripton.isEmpty? "Sem descrição..." : descripton);
+                      _formKey.currentState?.reset();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Livro adiconado com sucesso!"),

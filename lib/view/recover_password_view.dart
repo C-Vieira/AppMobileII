@@ -63,7 +63,10 @@ class _RecoverPasswordView extends State<RecoverPasswordView> {
                 ),
                 onPressed: () {
                   if(_formKey.currentState!.validate()) {
-                    
+                    _formKey.currentState?.reset();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Um email de recuperação foi envidao"))
+                    );
                   }
                 },
                 child: Text("Recuperar Senha"),

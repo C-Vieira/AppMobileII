@@ -96,6 +96,7 @@ class _LoginViewState extends State<LoginView>{
                 onPressed: () {
                   if(_formKey.currentState!.validate()){
                     if(ctrl.login(email, password)){
+                      _formKey.currentState?.reset();
                       Navigator.pushNamed(context, 'home');
                     }else{
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -122,6 +123,7 @@ class _LoginViewState extends State<LoginView>{
                       minimumSize: Size(100, 50), textStyle: TextStyle(fontSize: 15.0),
                     ),
                     onPressed: () {
+                      _formKey.currentState?.reset();
                       Navigator.pushNamed(context, 'register');
                     },
                     child: Text("Cadastrar Conta"),
@@ -134,6 +136,7 @@ class _LoginViewState extends State<LoginView>{
                       minimumSize: Size(100, 50), textStyle: TextStyle(fontSize: 15.0),
                     ),
                     onPressed: () {
+                      _formKey.currentState?.reset();
                       Navigator.pushNamed(context, 'recover');
                     },
                     child: Text("Recuperar Senha"),
