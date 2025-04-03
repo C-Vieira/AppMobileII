@@ -18,6 +18,7 @@ class _HomeViewState extends State<HomeView> {
   void initState(){
     super.initState();
     ctrl.addListener(() => setState(() {}));
+    userCtrl.addListener(() => setState(() {}));
   }
 
   @override
@@ -42,31 +43,35 @@ class _HomeViewState extends State<HomeView> {
             Text("Meus Empréstimos: ", style: TextStyle(fontSize: 20)),
             SizedBox(height: 20.0,),
             /*
-             *  ListView Empréstimos
+             *  ListView BookLoan
              */
-            /*Expanded(
+            Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: ctrl.books.length,
+                itemCount: userCtrl.users[userCtrl.currentUserIndex].loans.length,
                 itemBuilder: (context, index) {
-                  final book = ctrl.books[index];
+                  final loan = userCtrl.users[userCtrl.currentUserIndex].loans[index];
                   return SizedBox(
                     width: 150,
                     child: Card(
                       child: ListTile(
                         leading: Icon(Icons.auto_stories),
-                        title: Text(book.title),
-                        subtitle: Text(book.subtitle),
+                        title: Text(loan.book.title),
+                        subtitle: Text(loan.book.subtitle),
                         trailing: IconButton(
                           icon: Icon(Icons.delete_outline),
-                          onPressed: () => ctrl.removeBook(index),
+                          onPressed: () => userCtrl.removeLoan(index, userCtrl.currentUserIndex),
                         ),
+                        onTap: () {
+                          ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
+                          Navigator.pushNamed(context, 'bookDetails');
+                        },
                       ),
                     ),
                   );
                 },
               ),
-            ),*/
+            ),
           ],
         ),
       ),

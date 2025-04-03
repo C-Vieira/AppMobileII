@@ -1,4 +1,5 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -11,11 +12,13 @@ class ListBookView extends StatefulWidget {
 
 class _ListBookViewState extends State<ListBookView> {
   final ctrl = GetIt.I.get<BookController>();
+  final userCtrl = GetIt.I.get<UserController>();
 
   @override
   void initState(){
     super.initState();
     ctrl.addListener(() => setState(() {}));
+    userCtrl.addListener(() => setState(() {}));
   }
 
   @override
@@ -52,7 +55,15 @@ class _ListBookViewState extends State<ListBookView> {
                     width: 150,
                     child: Card(
                       child: ListTile(
-                        leading: Icon(Icons.auto_stories),
+                        leading: IconButton(
+                          icon: Icon(Icons.bookmark_add),
+                          onPressed: () {
+                            userCtrl.addLoan(book, userCtrl.currentUserIndex);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Empréstimo criado com sucesso!"))
+                            );
+                          }
+                        ),
                         title: Text(book.title),
                         subtitle: Text(book.subtitle),
                         trailing: IconButton(

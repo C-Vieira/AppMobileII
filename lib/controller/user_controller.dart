@@ -1,3 +1,5 @@
+import 'package:app_mobile2/model/book_loan_model.dart';
+import 'package:app_mobile2/model/book_model.dart';
 import 'package:app_mobile2/model/user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -24,5 +26,15 @@ class UserController extends ChangeNotifier {
     }
 
     return found;
+  }
+
+  void addLoan(Book book, int userId){
+    _users[userId].loans.add(BookLoan(book: book));
+    notifyListeners();
+  }
+
+  void removeLoan(index, int userId){
+    _users[userId].loans.removeAt(index);
+    notifyListeners();
   }
 }
