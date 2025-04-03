@@ -1,4 +1,5 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:app_mobile2/view/about_view.dart';
 import 'package:app_mobile2/view/add_book_view.dart';
 import 'package:app_mobile2/view/book_details_view.dart';
@@ -16,6 +17,7 @@ final g = GetIt.instance;
 
 void main() {
   g.registerSingleton<BookController>(BookController());  
+  g.registerSingleton<UserController>(UserController());  
 
   runApp(
     DevicePreview(

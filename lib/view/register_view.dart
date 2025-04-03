@@ -1,4 +1,6 @@
+import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -8,8 +10,14 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  final ctrl = GetIt.I.get<UserController>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String name = "";
+  String email = "";
+  String phoneNumber = "";
+  String password = "";
+  String confirmedPassword = "";
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +57,9 @@ class _RegisterViewState extends State<RegisterView> {
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  name = value;
+                },
               ),
               SizedBox(height: 20.0),
               /*
@@ -67,7 +77,9 @@ class _RegisterViewState extends State<RegisterView> {
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  email = value;
+                },
               ),
               SizedBox(height: 20.0),
               /*
@@ -85,7 +97,9 @@ class _RegisterViewState extends State<RegisterView> {
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  phoneNumber = value;
+                },
               ),
               SizedBox(height: 20.0),
               /*
@@ -104,7 +118,9 @@ class _RegisterViewState extends State<RegisterView> {
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  password = value;
+                },
               ),
               SizedBox(height: 20.0),
               /*
@@ -123,7 +139,9 @@ class _RegisterViewState extends State<RegisterView> {
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  confirmedPassword = value;
+                },
               ),
               SizedBox(height: 30.0),
               /*
@@ -137,7 +155,20 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 onPressed: () {
                   if(_formKey.currentState!.validate()){
-
+                    if(password == confirmedPassword){
+                      ctrl.addUser(name, email, phoneNumber, password);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Usuário Cadastrado com Sucesso!"),
+                        )
+                      );
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Senha e Confirmação de Senha Diferentes!"),
+                        )
+                      );
+                    }
                   }
                 },
                 child: Text("Cadastrar Conta"),
