@@ -42,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
             /*
              *  ListView Empréstimos
              */
-            Expanded(
+            /*Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: ctrl.books.length,
@@ -64,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
                   );
                 },
               ),
-            ),
+            ),*/
           ],
         ),
       ),

@@ -14,19 +14,12 @@ class BookController extends ChangeNotifier {
     Book(title: "Title9", subtitle: "Subtitle9"),
     Book(title: "Title10", subtitle: "Subtitle10"),
   ];
-
-  bool _visualizarLista = true;
+  int currentBookIndex = 0;
 
   List<Book> get books => _books;
-  bool get visualizarLista => _visualizarLista;
 
-  void alterarVisualizacao(valor){
-    _visualizarLista = valor;
-    notifyListeners();
-  }
-
-  void addBook(String title, String subtitle){
-    _books.add(Book(title: title, subtitle: subtitle));
+  void addBook(String title, String subtitle, String descripton){
+    _books.add(Book(title: title, subtitle: subtitle, descripton: descripton));
     notifyListeners();
   }
 

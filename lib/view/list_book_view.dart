@@ -60,7 +60,8 @@ class _ListBookViewState extends State<ListBookView> {
                           onPressed: () => ctrl.removeBook(index),
                         ),
                         onTap: () {
-                            Navigator.pushNamed(context, 'bookDetails');
+                          ctrl.currentBookIndex = index;
+                          Navigator.pushNamed(context, 'bookDetails');
                         },
                       ),
                     ),

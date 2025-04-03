@@ -16,6 +16,7 @@ class _AddBookViewState extends State<AddBookView> {
   String title = "";
   String subtitle = "";
   int borrowTime = 0;
+  String descripton = "";
 
   @override
   Widget build(BuildContext context) {
@@ -101,24 +102,19 @@ class _AddBookViewState extends State<AddBookView> {
                 ),
                 SizedBox(height: 20.0),
                 /*
-                *  Password Input Field
+                *  Description Input Field
                 */
-                /*TextFormField(
-                  obscureText: true,
+                TextFormField(
                   style: TextStyle(fontSize: 20),
                   decoration: InputDecoration(
-                    labelText: "Senha",
+                    labelText: "Descrição (Opcional)",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
                   ),
-                  validator: (value) {
-                    if(value!.isEmpty){
-                      return "Defina sua Senha";
-                    }
-                    return null;
+                  onChanged: (value) {
+                    descripton = value;
                   },
-                  onChanged: (value) {},
                 ),
-                SizedBox(height: 20.0),*/
+                SizedBox(height: 20.0),
                 /*
                 *  Confirm Password Input Field
                 */
@@ -149,7 +145,7 @@ class _AddBookViewState extends State<AddBookView> {
                   ),
                   onPressed: () {
                     if(_formKey.currentState!.validate()){
-                      ctrl.addBook(title, subtitle);
+                      ctrl.addBook(title, subtitle, descripton.isEmpty? "Sem descrição..." : descripton);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Livro adiconado com sucesso!"),
