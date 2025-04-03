@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 
 class BookController extends ChangeNotifier {
   final List<Book> _books = [
-    Book(title: "Title1", subtitle: "Subtitle1"),
-    Book(title: "Title2", subtitle: "Subtitle2"),
-    Book(title: "Title3", subtitle: "Subtitle3"),
-    Book(title: "Title4", subtitle: "Subtitle4"),
-    Book(title: "Title5", subtitle: "Subtitle5"),
-    Book(title: "Title6", subtitle: "Subtitle6"),
-    Book(title: "Title7", subtitle: "Subtitle7"),
-    Book(title: "Title8", subtitle: "Subtitle8"),
-    Book(title: "Title9", subtitle: "Subtitle9"),
-    Book(title: "Title10", subtitle: "Subtitle10"),
+    Book(title: "Java: Como Programar", subtitle: "10º Edição",
+    descripton: "Tudo sobre a linguagem de programação Java 8.0! Aprenda com explicações, exemplos e projetos práticos do básico ao avançado."),
+    Book(title: "Arquitetura e Organização de Computadores", subtitle: "8º Edição"),
+    Book(title: "Design Patterns", subtitle: "Elements of Reusable Object Oriented Software"),
+    Book(title: "Cálculo Integral e Diferencial", subtitle: "5º Edição"),
+    Book(title: "Sistemas Operacionais", subtitle: "6º Edição"),
+    Book(title: "Sistemas Distribuídos", subtitle: "4º Edição"),
   ];
   int currentBookIndex = 0;
 
