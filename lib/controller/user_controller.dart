@@ -14,16 +14,15 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void login(String givenEmail, String givenPassword){
-    //User result = _users.firstWhere(
-      //(user) => ((user.email == givenEmail) && (user.password == givenPassword)), orElse: () => );
+  bool login(String givenEmail, String givenPassword){
     bool found = false;
-    for (var user in _users) {
-      if((user.email == givenEmail) && (user.password == givenPassword)) found = true;
+    for (int i = 0; i < _users.length; i++) {
+      if((_users[i].email == givenEmail) && (_users[i].password == givenPassword)){
+        found = true;
+        currentUserIndex = i;
+      }
     }
 
-    if(found){
-      //Login
-    }
+    return found;
   }
 }

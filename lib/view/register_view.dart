@@ -159,13 +159,13 @@ class _RegisterViewState extends State<RegisterView> {
                       ctrl.addUser(name, email, phoneNumber, password);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Usuário Cadastrado com Sucesso!"),
+                          content: Text("Usuário cadastrado com sucesso!"),
                         )
                       );
                     }else{
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Senha e Confirmação de Senha Diferentes!"),
+                          content: Text("Senha e confirmação de senha diferentes"),
                         )
                       );
                     }

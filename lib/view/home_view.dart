@@ -1,4 +1,5 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -11,6 +12,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final ctrl = GetIt.I.get<BookController>();
+  final userCtrl = GetIt.I.get<UserController>();
 
   @override
   void initState(){
@@ -25,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
        *  AppBar
        */
       appBar: AppBar(
-        title: Text("Home", style: TextStyle(color: Colors.white)),
+        title: Text("Home: Bem Vindo ${userCtrl.users[userCtrl.currentUserIndex].name} !", style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.blue.shade800,
       ),

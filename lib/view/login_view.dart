@@ -1,4 +1,6 @@
+import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -8,8 +10,11 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView>{
+  final ctrl = GetIt.I.get<UserController>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String email = "";
+  String password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,9 @@ class _LoginViewState extends State<LoginView>{
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  email = value;
+                },
               ),
               SizedBox(height: 20.0),
               /*
@@ -72,7 +79,9 @@ class _LoginViewState extends State<LoginView>{
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  password = value;
+                },
               ),
               SizedBox(height: 30.0),
               /*
@@ -86,7 +95,15 @@ class _LoginViewState extends State<LoginView>{
                 ),
                 onPressed: () {
                   if(_formKey.currentState!.validate()){
-                    Navigator.pushNamed(context, 'home');
+                    if(ctrl.login(email, password)){
+                      Navigator.pushNamed(context, 'home');
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Usuário ou senha incorretos"),
+                        )
+                      );
+                    }
                   }
                 },
                 child: Text("Fazer Login"),
