@@ -60,7 +60,7 @@ class _HomeViewState extends State<HomeView> {
                         subtitle: Text(loan.book.subtitle),
                         trailing: IconButton(
                           icon: Icon(Icons.delete_outline),
-                          onPressed: () => userCtrl.removeLoan(index, userCtrl.currentUserIndex),
+                          onPressed: () => addDeleteDialog(index),
                         ),
                         onTap: () {
                           ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
@@ -84,6 +84,32 @@ class _HomeViewState extends State<HomeView> {
         },
         child: Icon(Icons.folder, color: Colors.blue.shade800,),
       ),
+    );
+  }
+
+  void addDeleteDialog(int index){
+    showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text("Excluir este livro?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                userCtrl.removeLoan(index, userCtrl.currentUserIndex);
+                Navigator.pop(context);
+              },
+              child: Text("Sim", style: TextStyle(fontSize: 18.0),),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancelar", style: TextStyle(fontSize: 18.0),),
+            )
+          ],
+        );
+      }
     );
   }
 }

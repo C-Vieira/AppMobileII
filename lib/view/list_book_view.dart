@@ -1,5 +1,6 @@
 import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:app_mobile2/controller/user_controller.dart';
+import 'package:app_mobile2/model/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -57,18 +58,13 @@ class _ListBookViewState extends State<ListBookView> {
                       child: ListTile(
                         leading: IconButton(
                           icon: Icon(Icons.bookmark_add),
-                          onPressed: () {
-                            userCtrl.addLoan(book, userCtrl.currentUserIndex);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Empréstimo criado com sucesso!"))
-                            );
-                          }
+                          onPressed: () => addBorrowDialog(book)
                         ),
                         title: Text(book.title),
                         subtitle: Text(book.subtitle),
                         trailing: IconButton(
                           icon: Icon(Icons.delete_outline),
-                          onPressed: () => ctrl.removeBook(index),
+                          onPressed: () => addDeleteDialog(index),
                         ),
                         onTap: () {
                           ctrl.currentBookIndex = index;
@@ -83,6 +79,61 @@ class _ListBookViewState extends State<ListBookView> {
           ],
         ),
       ),
+    );
+  }
+
+  void addBorrowDialog(Book book){
+    showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text("Emprestar este livro?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                userCtrl.addLoan(book, userCtrl.currentUserIndex);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Empréstimo criado com sucesso!"))
+                );
+                Navigator.pop(context);
+              },
+              child: Text("Sim", style: TextStyle(fontSize: 18.0),),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancelar", style: TextStyle(fontSize: 18.0),),
+            )
+          ],
+        );
+      }
+    );
+  }
+
+  void addDeleteDialog(int index){
+    showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text("Excluir este livro?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                ctrl.removeBook(index);
+                Navigator.pop(context);
+              },
+              child: Text("Sim", style: TextStyle(fontSize: 18.0),),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancelar", style: TextStyle(fontSize: 18.0),),
+            )
+          ],
+        );
+      }
     );
   }
 }
