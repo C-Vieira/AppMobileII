@@ -1,4 +1,5 @@
 import 'package:app_mobile2/controller/user_controller.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -48,6 +49,7 @@ class _LoginViewState extends State<LoginView>{
               */
               TextFormField(
                 style: TextStyle(fontSize: 20),
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: "Email",
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -55,6 +57,8 @@ class _LoginViewState extends State<LoginView>{
                 validator: (value) {
                   if(value!.isEmpty){
                     return "Informe seu Email";
+                  }else if(!EmailValidator.validate(email)){
+                    return "Formato de Email inválido";
                   }
                   return null;
                 },

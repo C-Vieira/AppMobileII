@@ -1,5 +1,7 @@
 import 'package:app_mobile2/controller/user_controller.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 class RegisterView extends StatefulWidget {
@@ -67,6 +69,7 @@ class _RegisterViewState extends State<RegisterView> {
               */
               TextFormField(
                 style: TextStyle(fontSize: 20),
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: "Email",
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -74,6 +77,8 @@ class _RegisterViewState extends State<RegisterView> {
                 validator: (value) {
                   if(value!.isEmpty){
                     return "Informe seu Email";
+                  }else if(!EmailValidator.validate(email)){
+                    return "Formato de Email inválido";
                   }
                   return null;
                 },
@@ -87,13 +92,19 @@ class _RegisterViewState extends State<RegisterView> {
               */
               TextFormField(
                 style: TextStyle(fontSize: 20),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                maxLength: 10,
                 decoration: InputDecoration(
                   labelText: "Telefone",
+                  counterText: '',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
                 ),
                 validator: (value) {
                   if(value!.isEmpty){
                     return "Informe seu Telefone";
+                  }else if(phoneNumber.length != 10){
+                    return "Formato de número de telefone inválido";
                   }
                   return null;
                 },

@@ -1,5 +1,6 @@
 import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 class AddBookView extends StatefulWidget {
@@ -86,6 +87,8 @@ class _AddBookViewState extends State<AddBookView> {
                 */
                 TextFormField(
                   style: TextStyle(fontSize: 20),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     labelText: "Tempo de Empréstimo (Dias)",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -115,25 +118,6 @@ class _AddBookViewState extends State<AddBookView> {
                   },
                 ),
                 SizedBox(height: 20.0),
-                /*
-                *  Confirm Password Input Field
-                */
-                /*TextFormField(
-                  obscureText: true,
-                  style: TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
-                    labelText: "Confirmar Senha",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
-                  ),
-                  validator: (value) {
-                    if(value!.isEmpty){
-                      return "Confirme sua Senha";
-                    }
-                    return null;
-                  },
-                  onChanged: (value) {},
-                ),
-                SizedBox(height: 30.0),*/
                 /*
                 *  Add Book Button
                 */
