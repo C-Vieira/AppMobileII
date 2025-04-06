@@ -50,25 +50,34 @@ class _HomeViewState extends State<HomeView> {
                 scrollDirection: Axis.vertical,
                 itemCount: userCtrl.users[userCtrl.currentUserIndex].loans.length,
                 itemBuilder: (context, index) {
-                  final loan = userCtrl.users[userCtrl.currentUserIndex].loans[index];
-                  return SizedBox(
-                    width: 150,
-                    child: Card(
-                      child: ListTile(
-                        leading: Icon(Icons.auto_stories),
-                        title: Text(loan.book.title),
-                        subtitle: Text(loan.book.subtitle),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete_outline),
-                          onPressed: () => addDeleteDialog(index),
+                  if(index < userCtrl.users[userCtrl.currentUserIndex].loans.length){
+                    final loan = userCtrl.users[userCtrl.currentUserIndex].loans[index];
+                    if(ctrl.books.contains(loan.book)){
+                      return SizedBox(
+                        width: 150,
+                        child: Card(
+                          child: ListTile(
+                            leading: Icon(Icons.auto_stories),
+                            title: Text(loan.book.title),
+                            subtitle: Text(loan.book.subtitle),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete_outline),
+                              onPressed: () => addDeleteDialog(index),
+                            ),
+                            onTap: () {
+                              ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
+                              Navigator.pushNamed(context, 'bookDetails');
+                            },
+                          ),
                         ),
-                        onTap: () {
-                          ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
-                          Navigator.pushNamed(context, 'bookDetails');
-                        },
-                      ),
-                    ),
-                  );
+                      );
+                    }else{
+                      userCtrl.removeLoan(index, userCtrl.currentUserIndex);
+                      return null;
+                    }
+                  }else{
+                    return null;
+                  }
                 },
               ),
             ),
