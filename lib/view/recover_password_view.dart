@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class RecoverPasswordView extends StatefulWidget {
@@ -10,6 +11,7 @@ class RecoverPasswordView extends StatefulWidget {
 class _RecoverPasswordView extends State<RecoverPasswordView> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String email = "";
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class _RecoverPasswordView extends State<RecoverPasswordView> {
               */
               TextFormField(
                 style: TextStyle(fontSize: 20),
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: "Email",
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -46,10 +49,14 @@ class _RecoverPasswordView extends State<RecoverPasswordView> {
                 validator: (value) {
                   if(value!.isEmpty){
                     return "Informe seu Email";
+                  }else if(!EmailValidator.validate(email)){
+                    return "Formato de Email inválido";
                   }
                   return null;
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  email = value;
+                },
               ),
               SizedBox(height: 20.0),
               /*
