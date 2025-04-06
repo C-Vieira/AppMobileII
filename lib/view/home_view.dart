@@ -80,7 +80,7 @@ class _HomeViewState extends State<HomeView> {
        */
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'operations');
+          Navigator.pushNamed(context, 'viewBooks');
         },
         child: Icon(Icons.folder, color: Colors.blue.shade800,),
       ),

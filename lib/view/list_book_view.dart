@@ -79,6 +79,15 @@ class _ListBookViewState extends State<ListBookView> {
           ],
         ),
       ),
+      /*
+       *  Floating Action Button
+       */
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, 'addBook');
+        },
+        child: Icon(Icons.add, color: Colors.blue.shade800,),
+      ),
     );
   }
 

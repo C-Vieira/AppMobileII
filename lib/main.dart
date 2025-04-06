@@ -7,7 +7,6 @@ import 'package:app_mobile2/view/edit_book_view.dart';
 import 'package:app_mobile2/view/home_view.dart';
 import 'package:app_mobile2/view/list_book_view.dart';
 import 'package:app_mobile2/view/login_view.dart';
-import 'package:app_mobile2/view/operations_view.dart';
 import 'package:app_mobile2/view/recover_password_view.dart';
 import 'package:app_mobile2/view/register_view.dart';
 import 'package:device_preview/device_preview.dart';
@@ -43,7 +42,6 @@ class MainApp extends StatelessWidget {
         'recover' : (context) => const RecoverPasswordView(),
         'register' : (context) => const RegisterView(),
         'home' : (context) => const HomeView(),
-        'operations' : (context) => const OperationsView(),
         'addBook' : (context) => const AddBookView(),
         'viewBooks' : (context) => const ListBookView(),
         'bookDetails' : (context) => const BookDetailsView(),

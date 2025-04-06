@@ -24,7 +24,7 @@ class _LoginViewState extends State<LoginView>{
        *  AppBar
        */
       appBar: AppBar(
-        title: Text("Bem Vindo", style: TextStyle(color: Colors.white)),
+        title: Text("Login", style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.blue.shade800,
       ),
