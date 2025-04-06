@@ -3,6 +3,7 @@ import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:app_mobile2/view/about_view.dart';
 import 'package:app_mobile2/view/add_book_view.dart';
 import 'package:app_mobile2/view/book_details_view.dart';
+import 'package:app_mobile2/view/edit_book_view.dart';
 import 'package:app_mobile2/view/home_view.dart';
 import 'package:app_mobile2/view/list_book_view.dart';
 import 'package:app_mobile2/view/login_view.dart';
@@ -46,6 +47,7 @@ class MainApp extends StatelessWidget {
         'addBook' : (context) => const AddBookView(),
         'viewBooks' : (context) => const ListBookView(),
         'bookDetails' : (context) => const BookDetailsView(),
+        'editBook' : (context) => const EditBookView(),
       },
     );
   }

@@ -68,7 +68,7 @@ class _ListBookViewState extends State<ListBookView> {
                         ),
                         onTap: () {
                           ctrl.currentBookIndex = index;
-                          Navigator.pushNamed(context, 'bookDetails');
+                          Navigator.pushNamed(context, 'editBook');
                         },
                       ),
                     ),

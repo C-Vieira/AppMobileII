@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
-class AddBookView extends StatefulWidget {
-  const AddBookView({super.key});
+class EditBookView extends StatefulWidget {
+  const EditBookView({super.key});
 
   @override
-  State<AddBookView> createState() => _AddBookViewState();
+  State<EditBookView> createState() => _EditBookViewState();
 }
 
-class _AddBookViewState extends State<AddBookView> {
+class _EditBookViewState extends State<EditBookView> {
   final ctrl = GetIt.I.get<BookController>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -21,12 +21,17 @@ class _AddBookViewState extends State<AddBookView> {
 
   @override
   Widget build(BuildContext context) {
+    title = ctrl.books[ctrl.currentBookIndex].title;
+    subtitle = ctrl.books[ctrl.currentBookIndex].subtitle;
+    borrowTime = ctrl.books[ctrl.currentBookIndex].borrowTime;
+    descripton = ctrl.books[ctrl.currentBookIndex].descripton;  
+
     return Scaffold(
       /*
        *  AppBar
        */
       appBar: AppBar(
-        title: Text("Adicionar Livro", style: TextStyle(color: Colors.white)),
+        title: Text("Editar Livro", style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.blue.shade800,
       ),
@@ -47,6 +52,7 @@ class _AddBookViewState extends State<AddBookView> {
                 */
                 TextFormField(
                   style: TextStyle(fontSize: 20),
+                  initialValue: ctrl.books[ctrl.currentBookIndex].title,
                   decoration: InputDecoration(
                     labelText: "Título",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -67,6 +73,7 @@ class _AddBookViewState extends State<AddBookView> {
                 */
                 TextFormField(
                   style: TextStyle(fontSize: 20),
+                  initialValue: ctrl.books[ctrl.currentBookIndex].subtitle,
                   decoration: InputDecoration(
                     labelText: "Subtítulo",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -88,6 +95,7 @@ class _AddBookViewState extends State<AddBookView> {
                 TextFormField(
                   style: TextStyle(fontSize: 20),
                   keyboardType: TextInputType.number,
+                  initialValue: ctrl.books[ctrl.currentBookIndex].borrowTime.toString(),
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     labelText: "Tempo de Empréstimo (Dias)",
@@ -109,6 +117,7 @@ class _AddBookViewState extends State<AddBookView> {
                 */
                 TextFormField(
                   style: TextStyle(fontSize: 20),
+                  initialValue: ctrl.books[ctrl.currentBookIndex].descripton,
                   decoration: InputDecoration(
                     labelText: "Descrição (Opcional)",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -119,7 +128,7 @@ class _AddBookViewState extends State<AddBookView> {
                 ),
                 SizedBox(height: 20.0),
                 /*
-                *  Add Book Button
+                *  Edit Book Button
                 */
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -129,16 +138,15 @@ class _AddBookViewState extends State<AddBookView> {
                   ),
                   onPressed: () {
                     if(_formKey.currentState!.validate()){
-                      ctrl.addBook(title, subtitle, borrowTime, descripton.isEmpty? "Sem descrição..." : descripton);
-                      _formKey.currentState?.reset();
+                      ctrl.editBook(title, subtitle, borrowTime, descripton);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Livro adiconado com sucesso!"),
+                          content: Text("Livro editado com sucesso!"),
                         )
                       );
                     }
                   },
-                  child: Text("Adiconar Livro"),
+                  child: Text("Editar Livro"),
                 ),
             ],
           ),
