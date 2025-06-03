@@ -1,6 +1,6 @@
 import 'package:app_mobile2/model/book_loan_model.dart';
 
-class User{
+class MyUser{
   final String name;
   final String email;
   final String phoneNumber;
@@ -8,7 +8,7 @@ class User{
 
   final List<BookLoan> loans = [];
 
-  User({
+  MyUser({
     required this.name,
     required this.email,
     required this.phoneNumber,

@@ -99,7 +99,10 @@ class _LoginViewState extends State<LoginView>{
                 ),
                 onPressed: () {
                   if(_formKey.currentState!.validate()){
-                    if(ctrl.login(email, password)){
+                    ctrl.login(context, email, password);
+                    //_formKey.currentState?.reset();
+
+                    /*if(ctrl.login(email, password)){
                       _formKey.currentState?.reset();
                       Navigator.pushNamed(context, 'home');
                     }else{
@@ -108,7 +111,7 @@ class _LoginViewState extends State<LoginView>{
                           content: Text("Usuário ou senha incorretos"),
                         )
                       );
-                    }
+                    }*/
                   }
                 },
                 child: Text("Fazer Login"),
