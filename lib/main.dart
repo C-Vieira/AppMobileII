@@ -1,5 +1,6 @@
 import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:app_mobile2/controller/user_controller.dart';
+import 'package:app_mobile2/firebase_options.dart';
 import 'package:app_mobile2/view/about_view.dart';
 import 'package:app_mobile2/view/add_book_view.dart';
 import 'package:app_mobile2/view/book_details_view.dart';
@@ -10,12 +11,17 @@ import 'package:app_mobile2/view/login_view.dart';
 import 'package:app_mobile2/view/recover_password_view.dart';
 import 'package:app_mobile2/view/register_view.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 final g = GetIt.instance;
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   g.registerSingleton<BookController>(BookController());  
   g.registerSingleton<UserController>(UserController());  
 
