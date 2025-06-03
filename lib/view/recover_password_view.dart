@@ -1,5 +1,7 @@
+import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class RecoverPasswordView extends StatefulWidget {
   const RecoverPasswordView({super.key});
@@ -9,6 +11,7 @@ class RecoverPasswordView extends StatefulWidget {
 }
 
 class _RecoverPasswordView extends State<RecoverPasswordView> {
+  final ctrl = GetIt.I.get<UserController>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email = "";
@@ -70,10 +73,11 @@ class _RecoverPasswordView extends State<RecoverPasswordView> {
                 ),
                 onPressed: () {
                   if(_formKey.currentState!.validate()) {
+                    ctrl.recoverPassword(context, email);
                     _formKey.currentState?.reset();
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    /*ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Um email de recuperação foi envidao"))
-                    );
+                    );*/
                   }
                 },
                 child: Text("Recuperar Senha"),

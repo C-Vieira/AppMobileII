@@ -83,6 +83,23 @@ class UserController extends ChangeNotifier {
       });
   }
 
+  void recoverPassword(context, String email){
+    FirebaseAuth.instance
+      .sendPasswordResetEmail(email: email)
+      .then((result) {
+        showMessage(context, 'Um email de recuperação foi enviado para $email');
+      }).catchError((e) {
+        switch(e.code){
+          case 'user-not-found':
+            showMessage(context, 'Usuário não encontrado');
+            break;
+          default:
+            showMessage(context, e.code.toString());
+            break;
+        }
+      });
+  }
+
   void addLoan(Book book, int userId){
     _users[userId].loans.add(BookLoan(book: book));
     notifyListeners();
