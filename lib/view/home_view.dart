@@ -28,8 +28,35 @@ class _HomeViewState extends State<HomeView> {
        *  AppBar
        */
       appBar: AppBar(
-        title: Text("Home: Bem Vindo ${userCtrl.users[userCtrl.currentUserIndex].name} !", style: TextStyle(color: Colors.white)),
-        centerTitle: true,
+        title: Row(
+          children: [
+            Expanded(child: Text('Bem Vindo!', style: TextStyle(color: Colors.white),)),
+            FutureBuilder<String>(
+              future: UserController().getCurrentUserName(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                 return Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: TextButton.icon(
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        textStyle: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {
+                        UserController().logout();
+                        Navigator.pushReplacementNamed(context, 'login');
+                      },
+                      icon: Icon(Icons.exit_to_app, size: 20, color: Colors.white,),
+                      label: Text(snapshot.data.toString()),
+                    ),
+                  );
+                }
+                return Text('');
+              },
+            )
+          ],
+        ),
+        //centerTitle: true,
         backgroundColor: Colors.blue.shade800,
       ),
       /*

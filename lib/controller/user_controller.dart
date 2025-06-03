@@ -100,6 +100,28 @@ class UserController extends ChangeNotifier {
       });
   }
 
+  Future<String> getCurrentUserName() async{
+    var userName = '';
+    await FirebaseFirestore.instance
+      .collection('usuarios')
+      .where('uid', isEqualTo: getCurrentUserId())
+      .get()
+      .then((result) {
+          userName = result.docs[0].data()['name'] ?? '';
+      });
+
+      return userName;
+  }
+
+  String? getCurrentUserId(){
+    final user = FirebaseAuth.instance.currentUser;
+    return user?.uid;
+  }
+
+  void logout(){
+    FirebaseAuth.instance.signOut();
+  }
+
   void addLoan(Book book, int userId){
     _users[userId].loans.add(BookLoan(book: book));
     notifyListeners();
