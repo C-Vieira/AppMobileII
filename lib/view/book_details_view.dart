@@ -1,4 +1,5 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/model/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -14,6 +15,8 @@ class _BookDetailsViewState extends State<BookDetailsView> {
   
   @override
   Widget build(BuildContext context) {
+    Book currBook = ctrl.getCurrentBook() as Book;
+
     return Scaffold(
       /*
        *  AppBar
@@ -33,13 +36,13 @@ class _BookDetailsViewState extends State<BookDetailsView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Título: ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Text(ctrl.books[ctrl.currentBookIndex].title, style: TextStyle(fontSize: 20)),
+            Text(currBook.title, style: TextStyle(fontSize: 20)),
             SizedBox(height: 10.0,),
             Text("Subtítulo: ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Text(ctrl.books[ctrl.currentBookIndex].subtitle, style: TextStyle(fontSize: 20)),
+            Text(currBook.subtitle, style: TextStyle(fontSize: 20)),
             SizedBox(height: 10.0,),
             Text("Descrição: ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Text(ctrl.books[ctrl.currentBookIndex].descripton, style: TextStyle(fontSize: 20)),
+            Text(currBook.descripton, style: TextStyle(fontSize: 20)),
             SizedBox(height: 10.0,),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:app_mobile2/model/book_loan_model.dart';
 import 'package:app_mobile2/model/book_model.dart';
 import 'package:app_mobile2/model/user_model.dart';
+import 'package:app_mobile2/view/components/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -113,9 +114,9 @@ class UserController extends ChangeNotifier {
       return userName;
   }
 
-  String? getCurrentUserId(){
+  String getCurrentUserId(){
     final user = FirebaseAuth.instance.currentUser;
-    return user?.uid;
+    return user!.uid;
   }
 
   void logout(){
@@ -130,11 +131,5 @@ class UserController extends ChangeNotifier {
   void removeLoan(index, int userId){
     _users[userId].loans.removeAt(index);
     notifyListeners();
-  }
-
-  void showMessage(context, String msg){
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg), duration: const Duration(seconds: 3),) 
-    );
   }
 }

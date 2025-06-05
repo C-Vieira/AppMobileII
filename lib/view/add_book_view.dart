@@ -1,4 +1,5 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/model/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -129,13 +130,15 @@ class _AddBookViewState extends State<AddBookView> {
                   ),
                   onPressed: () {
                     if(_formKey.currentState!.validate()){
-                      ctrl.addBook(title, subtitle, borrowTime, descripton.isEmpty? "Sem descrição..." : descripton);
+                      //ctrl.addBook(title, subtitle, borrowTime, descripton.isEmpty? "Sem descrição..." : descripton);
+                      var book = Book(title, subtitle, descripton, borrowTime);
+                      ctrl.addBook(context, book);
                       _formKey.currentState?.reset();
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      /*ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Livro adiconado com sucesso!"),
                         )
-                      );
+                      );*/
                     }
                   },
                   child: Text("Adiconar Livro"),

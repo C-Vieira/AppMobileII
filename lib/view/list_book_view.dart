@@ -1,6 +1,7 @@
 import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:app_mobile2/model/book_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -47,34 +48,55 @@ class _ListBookViewState extends State<ListBookView> {
              *  ListView Books
              */
             Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: ctrl.books.length,
-                itemBuilder: (context, index) {
-                  final book = ctrl.books[index];
-                  return SizedBox(
-                    width: 150,
-                    child: Card(
-                      child: ListTile(
-                        leading: IconButton(
-                          icon: Icon(Icons.bookmark_add),
-                          onPressed: () => addBorrowDialog(book)
-                        ),
-                        title: Text(book.title),
-                        subtitle: Text(book.subtitle),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete_outline),
-                          onPressed: () => addDeleteDialog(index),
-                        ),
-                        onTap: () {
-                          ctrl.currentBookIndex = index;
-                          Navigator.pushNamed(context, 'editBook');
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: BookController().listBooks(),
+                builder: (context, snapshot) {
+                  switch(snapshot.connectionState){
+                    case ConnectionState.none:
+                      return Center(
+                        child: Text('Não foi possível conectar'),
+                      );
+                    case ConnectionState.waiting:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    default:
+                      final data = snapshot.requireData;
+                      if(data.size > 0){
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: data.size,
+                          itemBuilder: (context, index) {
+                            String id = data.docs[index].id;
+                            dynamic item = data.docs[index].data();
+                            return SizedBox(
+                              width: 150,
+                              child: Card(
+                                child: ListTile(
+                                  leading: IconButton(
+                                    icon: Icon(Icons.bookmark_add),
+                                    onPressed: () => {} //addBorrowDialog(book)
+                                  ),
+                                  title: Text(item['title']),
+                                  subtitle: Text(item['subtitle']),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete_outline),
+                                    onPressed: () => addDeleteDialog(id),
+                                  ),
+                                  onTap: () {
+                                    ctrl.currentBookId = id;
+                                    Navigator.pushNamed(context, 'editBook');
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      } 
+                    return Center(child: Text('Nenhum livro encontrado'));
+                  }
+                }
+              )
             ),
           ],
         ),
@@ -120,7 +142,7 @@ class _ListBookViewState extends State<ListBookView> {
     );
   }
 
-  void addDeleteDialog(int index){
+  void addDeleteDialog(id){
     showDialog(
       context: context,
       builder: (context){
@@ -129,7 +151,7 @@ class _ListBookViewState extends State<ListBookView> {
           actions: [
             TextButton(
               onPressed: () {
-                ctrl.removeBook(index);
+                ctrl.removeBook(context, id);
                 Navigator.pop(context);
               },
               child: Text("Sim", style: TextStyle(fontSize: 18.0),),

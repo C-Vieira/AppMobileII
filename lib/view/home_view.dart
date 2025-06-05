@@ -79,7 +79,7 @@ class _HomeViewState extends State<HomeView> {
                 itemBuilder: (context, index) {
                   if(index < userCtrl.users[userCtrl.currentUserIndex].loans.length){
                     final loan = userCtrl.users[userCtrl.currentUserIndex].loans[index];
-                    if(ctrl.books.contains(loan.book)){
+                    if(false /*ctrl.books.contains(loan.book)*/){
                       return SizedBox(
                         width: 150,
                         child: Card(
@@ -92,7 +92,7 @@ class _HomeViewState extends State<HomeView> {
                               onPressed: () => addDeleteDialog(index),
                             ),
                             onTap: () {
-                              ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
+                              //ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
                               Navigator.pushNamed(context, 'bookDetails');
                             },
                           ),
