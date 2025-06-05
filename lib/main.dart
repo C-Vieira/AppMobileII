@@ -1,4 +1,5 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/controller/book_loan_controller.dart';
 import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:app_mobile2/firebase_options.dart';
 import 'package:app_mobile2/view/about_view.dart';
@@ -24,6 +25,7 @@ Future<void> main() async {
 
   g.registerSingleton<BookController>(BookController());  
   g.registerSingleton<UserController>(UserController());  
+  g.registerSingleton<BookLoanController>(BookLoanController());  
 
   runApp(
     DevicePreview(

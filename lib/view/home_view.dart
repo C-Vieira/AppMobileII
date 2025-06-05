@@ -1,5 +1,7 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/controller/book_loan_controller.dart';
 import 'package:app_mobile2/controller/user_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -13,6 +15,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final ctrl = GetIt.I.get<BookController>();
   final userCtrl = GetIt.I.get<UserController>();
+  final loanCtrl = GetIt.I.get<BookLoanController>();
 
   @override
   void initState(){
@@ -73,40 +76,52 @@ class _HomeViewState extends State<HomeView> {
              *  ListView BookLoan
              */
             Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: userCtrl.users[userCtrl.currentUserIndex].loans.length,
-                itemBuilder: (context, index) {
-                  if(index < userCtrl.users[userCtrl.currentUserIndex].loans.length){
-                    final loan = userCtrl.users[userCtrl.currentUserIndex].loans[index];
-                    if(false /*ctrl.books.contains(loan.book)*/){
-                      return SizedBox(
-                        width: 150,
-                        child: Card(
-                          child: ListTile(
-                            leading: Icon(Icons.auto_stories),
-                            title: Text(loan.book.title),
-                            subtitle: Text(loan.book.subtitle),
-                            trailing: IconButton(
-                              icon: Icon(Icons.delete_outline),
-                              onPressed: () => addDeleteDialog(index),
-                            ),
-                            onTap: () {
-                              //ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
-                              Navigator.pushNamed(context, 'bookDetails');
-                            },
-                          ),
-                        ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: BookLoanController().listLoans(),
+                builder: (context, snapshot) {
+                  switch(snapshot.connectionState){
+                    case ConnectionState.none:
+                      return Center(
+                        child: Text('Não foi possível conectar'),
                       );
-                    }else{
-                      userCtrl.removeLoan(index, userCtrl.currentUserIndex);
-                      return null;
-                    }
-                  }else{
-                    return null;
+                    case ConnectionState.waiting:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    default:
+                      final data = snapshot.requireData;
+                      if(data.size > 0){
+                        return ListView.builder(
+                          itemCount: data.size,
+                          itemBuilder: (context, index) {
+                            String id = data.docs[index].id;
+                            dynamic item = data.docs[index].data();
+                            return SizedBox(
+                              width: 150,
+                              child: Card(
+                                child: ListTile(
+                                  leading: Icon(Icons.auto_stories),
+                                  // TODO: Get book data from bookUid and display
+                                  title: Text(item['userUid']),
+                                  subtitle: Text(item['bookUid']),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.delete_outline),
+                                    onPressed: () => addDeleteDialog(id),
+                                  ),
+                                  onTap: () {
+                                    //ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
+                                    Navigator.pushNamed(context, 'bookDetails');
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    return Center(child: Text('Nenhum empréstimo encontrado'));
                   }
                 },
-              ),
+              )
             ),
           ],
         ),
@@ -123,7 +138,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void addDeleteDialog(int index){
+  void addDeleteDialog(id){
     showDialog(
       context: context,
       builder: (context){
@@ -132,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
           actions: [
             TextButton(
               onPressed: () {
-                userCtrl.removeLoan(index, userCtrl.currentUserIndex);
+                loanCtrl.removeLoan(context, id);
                 Navigator.pop(context);
               },
               child: Text("Sim", style: TextStyle(fontSize: 18.0),),

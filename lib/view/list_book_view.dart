@@ -1,6 +1,7 @@
 import 'package:app_mobile2/controller/book_controller.dart';
+import 'package:app_mobile2/controller/book_loan_controller.dart';
 import 'package:app_mobile2/controller/user_controller.dart';
-import 'package:app_mobile2/model/book_model.dart';
+import 'package:app_mobile2/model/book_loan_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -15,6 +16,7 @@ class ListBookView extends StatefulWidget {
 class _ListBookViewState extends State<ListBookView> {
   final ctrl = GetIt.I.get<BookController>();
   final userCtrl = GetIt.I.get<UserController>();
+  final loanCtrl = GetIt.I.get<BookLoanController>();
 
   @override
   void initState(){
@@ -75,7 +77,7 @@ class _ListBookViewState extends State<ListBookView> {
                                 child: ListTile(
                                   leading: IconButton(
                                     icon: Icon(Icons.bookmark_add),
-                                    onPressed: () => {} //addBorrowDialog(book)
+                                    onPressed: () => addBorrowDialog(id),
                                   ),
                                   title: Text(item['title']),
                                   subtitle: Text(item['subtitle']),
@@ -113,7 +115,7 @@ class _ListBookViewState extends State<ListBookView> {
     );
   }
 
-  void addBorrowDialog(Book book){
+  void addBorrowDialog(bookId){
     showDialog(
       context: context,
       builder: (context){
@@ -122,7 +124,7 @@ class _ListBookViewState extends State<ListBookView> {
           actions: [
             TextButton(
               onPressed: () {
-                userCtrl.addLoan(book, userCtrl.currentUserIndex);
+                loanCtrl.addLoan(context, BookLoan(userCtrl.getCurrentUserId(), bookId));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Empréstimo criado com sucesso!"))
                 );
