@@ -77,7 +77,7 @@ class _ListBookViewState extends State<ListBookView> {
                                 child: ListTile(
                                   leading: IconButton(
                                     icon: Icon(Icons.bookmark_add),
-                                    onPressed: () => addBorrowDialog(id),
+                                    onPressed: () => addBorrowDialog(id, item['title'], item['subtitle']),
                                   ),
                                   title: Text(item['title']),
                                   subtitle: Text(item['subtitle']),
@@ -115,7 +115,7 @@ class _ListBookViewState extends State<ListBookView> {
     );
   }
 
-  void addBorrowDialog(bookId){
+  void addBorrowDialog(bookId, bookTitle, bookSubtiltle){
     showDialog(
       context: context,
       builder: (context){
@@ -124,7 +124,7 @@ class _ListBookViewState extends State<ListBookView> {
           actions: [
             TextButton(
               onPressed: () {
-                loanCtrl.addLoan(context, BookLoan(userCtrl.getCurrentUserId(), bookId));
+                loanCtrl.addLoan(context, BookLoan(userCtrl.getCurrentUserId(), bookId, bookTitle, bookSubtiltle));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Empréstimo criado com sucesso!"))
                 );

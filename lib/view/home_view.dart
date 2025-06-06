@@ -101,15 +101,14 @@ class _HomeViewState extends State<HomeView> {
                               child: Card(
                                 child: ListTile(
                                   leading: Icon(Icons.auto_stories),
-                                  // TODO: Get book data from bookUid and display
-                                  title: Text(item['userUid']),
-                                  subtitle: Text(item['bookUid']),
+                                  title: Text(item['bookTitle']),
+                                  subtitle: Text(item['bookSubtitle']),
                                   trailing: IconButton(
                                     icon: Icon(Icons.delete_outline),
                                     onPressed: () => addDeleteDialog(id),
                                   ),
                                   onTap: () {
-                                    //ctrl.currentBookIndex = ctrl.books.indexOf(loan.book);
+                                    ctrl.currentBookId = item['bookUid'];
                                     Navigator.pushNamed(context, 'bookDetails');
                                   },
                                 ),
