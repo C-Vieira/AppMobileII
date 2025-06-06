@@ -75,9 +75,6 @@ class _RecoverPasswordView extends State<RecoverPasswordView> {
                   if(_formKey.currentState!.validate()) {
                     ctrl.recoverPassword(context, email);
                     _formKey.currentState?.reset();
-                    /*ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Um email de recuperação foi envidao"))
-                    );*/
                   }
                 },
                 child: Text("Recuperar Senha"),

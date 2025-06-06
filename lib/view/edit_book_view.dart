@@ -1,5 +1,6 @@
 import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:app_mobile2/model/book_model.dart';
+import 'package:app_mobile2/view/components/time.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -152,13 +153,8 @@ class _EditBookViewState extends State<EditBookView> {
                           ),
                           onPressed: () {
                             if(_formKey.currentState!.validate()){
-                              //ctrl.editBook(title, subtitle, borrowTime, descripton);
-                              ctrl.editBook(context, ctrl.currentBookId, Book(title, subtitle, description, borrowTime));
-                              /*ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text("Livro editado com sucesso!"),
-                                )
-                              );*/
+                              ctrl.editBook(context, ctrl.currentBookId, 
+                                Book(title, subtitle, description, borrowTime, currBook['category'], getNow()));
                             }
                           },
                           child: Text("Editar Livro"),

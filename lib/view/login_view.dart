@@ -101,17 +101,6 @@ class _LoginViewState extends State<LoginView>{
                   if(_formKey.currentState!.validate()){
                     ctrl.login(context, email, password);
                     //_formKey.currentState?.reset();
-
-                    /*if(ctrl.login(email, password)){
-                      _formKey.currentState?.reset();
-                      Navigator.pushNamed(context, 'home');
-                    }else{
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Usuário ou senha incorretos"),
-                        )
-                      );
-                    }*/
                   }
                 },
                 child: Text("Fazer Login"),

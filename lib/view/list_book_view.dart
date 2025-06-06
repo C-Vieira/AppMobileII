@@ -2,6 +2,7 @@ import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:app_mobile2/controller/book_loan_controller.dart';
 import 'package:app_mobile2/controller/user_controller.dart';
 import 'package:app_mobile2/model/book_loan_model.dart';
+import 'package:app_mobile2/view/components/time.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -124,7 +125,7 @@ class _ListBookViewState extends State<ListBookView> {
           actions: [
             TextButton(
               onPressed: () {
-                loanCtrl.addLoan(context, BookLoan(userCtrl.getCurrentUserId(), bookId, bookTitle, bookSubtiltle));
+                loanCtrl.addLoan(context, BookLoan(userCtrl.getCurrentUserId(), bookId, bookTitle, bookSubtiltle, getNow()));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Empréstimo criado com sucesso!"))
                 );

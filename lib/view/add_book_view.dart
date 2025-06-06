@@ -1,5 +1,6 @@
 import 'package:app_mobile2/controller/book_controller.dart';
 import 'package:app_mobile2/model/book_model.dart';
+import 'package:app_mobile2/view/components/time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -19,6 +20,10 @@ class _AddBookViewState extends State<AddBookView> {
   String subtitle = "";
   int borrowTime = 0;
   String descripton = "";
+  String category = 'Software';
+
+  List<String> categories = <String>['Software', 'Computação', 'Eletrônica', 'Matemática'];
+  String dropdownValue = 'Software';
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +89,26 @@ class _AddBookViewState extends State<AddBookView> {
                 ),
                 SizedBox(height: 20.0),
                 /*
+                 *  Category Dropdown Button
+                 */
+                DropdownButtonFormField<String>(
+                  value: dropdownValue,
+                  icon: Icon(Icons.arrow_drop_down),
+                  isExpanded: true,
+                  onChanged: (String? value) {
+                    category = value!;
+                    setState(() {
+                      dropdownValue = value;
+                    });
+                  },
+                  items:
+                    categories.map<DropdownMenuItem<String>>((String value){
+                      return DropdownMenuItem<String>(value: value, child: Text(value));
+                    }).toList(),
+                
+                ),
+                SizedBox(height: 20.0),
+                /*
                 *  Borrow Time(Days) Input Field
                 */
                 TextFormField(
@@ -130,15 +155,9 @@ class _AddBookViewState extends State<AddBookView> {
                   ),
                   onPressed: () {
                     if(_formKey.currentState!.validate()){
-                      //ctrl.addBook(title, subtitle, borrowTime, descripton.isEmpty? "Sem descrição..." : descripton);
-                      var book = Book(title, subtitle, descripton, borrowTime);
+                      var book = Book(title, subtitle, descripton, borrowTime, category, getNow());
                       ctrl.addBook(context, book);
                       _formKey.currentState?.reset();
-                      /*ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Livro adiconado com sucesso!"),
-                        )
-                      );*/
                     }
                   },
                   child: Text("Adiconar Livro"),

@@ -169,11 +169,6 @@ class _RegisterViewState extends State<RegisterView> {
                     if(password == confirmedPassword){
                       ctrl.addUser(context ,name, email, phoneNumber, password);
                       _formKey.currentState?.reset();
-                      /*ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Usuário cadastrado com sucesso!"),
-                        )
-                      );*/
                     }else{
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

@@ -55,16 +55,14 @@ class BookController extends ChangeNotifier {
       .get()
       .then(
         (result) {
-          result.docs.forEach(
-            (doc) {
-              loans.doc(doc.id).delete();
-            }
-          );
+          for (var doc in result.docs) {
+            loans.doc(doc.id).delete();
+          }
         }
       )
       .catchError(
         // ignore: invalid_return_type_for_catch_error
-        (error) => showMessage(context, 'Erro ao exlcuir empréstimos associados'),
+        (error) => showMessage(context, 'Erro ao excluir empréstimos associados'),
       );
   }
 

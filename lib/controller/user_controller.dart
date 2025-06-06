@@ -1,32 +1,10 @@
-import 'package:app_mobile2/model/user_model.dart';
 import 'package:app_mobile2/view/components/message.dart';
+import 'package:app_mobile2/view/components/time.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserController extends ChangeNotifier {
-  final List<MyUser> _users = [
-    MyUser(name: "Admin", email: "admin@email.com", phoneNumber: "1111111111", password: "admin"),
-  ];
-  int currentUserIndex = 0;
-
-  List<MyUser> get users => _users;
-
-/*  void addUser(String name, String email, String phoneNumber, String password){
-    _users.add(MyUser(name: name, email: email, phoneNumber: phoneNumber, password: password));
-    notifyListeners();
-  }*/
-
-/*  bool login(String givenEmail, String givenPassword){
-    bool found = false;
-    for (int i = 0; i < _users.length; i++) {
-      if((_users[i].email == givenEmail) && (_users[i].password == givenPassword)){
-        found = true;
-        currentUserIndex = i;
-      }
-    }
-    return found;
-  }*/
 
   void addUser(context, name, email, phoneNumber, password){
     FirebaseAuth.instance
@@ -37,6 +15,7 @@ class UserController extends ChangeNotifier {
           "uid": result.user!.uid.toString(),
           "name": name,
           "phoneNumber": phoneNumber,
+          "registerDate": getNow(),
         });
         showMessage(context, 'Usuário criado com sucesso');
       }).catchError((e) {
@@ -120,14 +99,4 @@ class UserController extends ChangeNotifier {
   void logout(){
     FirebaseAuth.instance.signOut();
   }
-
-  //void addLoan(Book book, int userId){
-  //  _users[userId].loans.add(BookLoan(book: book));
-  //  notifyListeners();
-  //}
-
-  //void removeLoan(index, int userId){
-  //  _users[userId].loans.removeAt(index);
-  //  notifyListeners();
-  //}
 }

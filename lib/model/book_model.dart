@@ -4,16 +4,10 @@ class Book{
   String subtitle;
   String descripton;
   int borrowTime;
+  String category;
+  String registerDate;
 
-  /*Book({
-    required this.uid,
-    required this.title,
-    required this.subtitle,
-    required this.borrowTime,
-    this.descripton = 'Sem descrição...',
-  });*/
-
-  Book(this.title, this.subtitle, this.descripton, this.borrowTime);
+  Book(this.title, this.subtitle, this.descripton, this.borrowTime, this.category, this.registerDate);
 
   void setId(uid){
     this.uid = uid;
@@ -26,6 +20,8 @@ class Book{
       'subtitle': subtitle,
       'description': descripton,
       'borrowTime': borrowTime,
+      'category': category,
+      'registerDate': registerDate,
     };
   }
 
@@ -36,6 +32,8 @@ class Book{
       json['subtitle'],
       json['description'],
       json['borrowTime'],
+      json['category'],
+      json['registerDate'],
     );
   }
 }
