@@ -10,6 +10,11 @@ Software desenvolvido como método avaliativo para a disciplina "Programação M
 - **Linguagem Dart**
 - **Framework Flutter**
 
+# Serviços da Plataforma Firebase
+- **Firebase Auth**
+- **Firebase Firestore**
+- **Firebase Hosting** : Clique [aqui](https://app-mobile2-99d9a.web.app/) para acessar o WebApp
+
 # Telas
 ## Tela de Login
 <img src="https://github.com/C-Vieira/AppMobileII/blob/main/assets/images/tela_login.png" />
