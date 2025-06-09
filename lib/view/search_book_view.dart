@@ -7,17 +7,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class ListBookView extends StatefulWidget {
-  const ListBookView({super.key});
+class SearchBookView extends StatefulWidget {
+  const SearchBookView({super.key});
 
   @override
-  State<ListBookView> createState() => _ListBookViewState();
+  State<SearchBookView> createState() => _SearchBookViewState();
 }
 
-class _ListBookViewState extends State<ListBookView> {
+class _SearchBookViewState extends State<SearchBookView> {
   final ctrl = GetIt.I.get<BookController>();
   final userCtrl = GetIt.I.get<UserController>();
   final loanCtrl = GetIt.I.get<BookLoanController>();
+
+  final TextEditingController searchCtrl = TextEditingController();
+  String searchResult = '';
+
+  List<String> orderCriteria = <String>['title', 'subtitle', 'category', 'registerDate'];
+  String selectedCriteria = 'title';
 
   @override
   void initState(){
@@ -27,23 +33,19 @@ class _ListBookViewState extends State<ListBookView> {
   }
 
   @override
+  void dispose() {
+    searchCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       /*
        *  AppBar
        */
       appBar: AppBar(
-        title: Row(
-          children: [
-            Expanded(child: Text('Visualizar Livros', style: TextStyle(color: Colors.white), textAlign: TextAlign.center,)),
-            IconButton(
-                icon: Icon(Icons.search, color: Colors.white,),
-              onPressed: () {
-                Navigator.pushNamed(context, 'searchBook');
-              },
-            )
-          ],
-        ),
+        title: Text("Pesquisar Livros", style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.blue.shade800,
       ),
@@ -55,14 +57,23 @@ class _ListBookViewState extends State<ListBookView> {
 
         child: Column(
           children: [
-            Text("Livros Disponíveis: ", style: TextStyle(fontSize: 20)),
+            SearchBar(
+              leading: Icon(Icons.search),
+              hintText: 'pesquisar',
+              controller: searchCtrl,
+              onChanged: (value) {
+                setState(() {
+                  searchResult = value;
+                });
+              },
+            ),
             SizedBox(height: 20.0,),
             /*
              *  ListView Books
              */
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: BookController().listBooks('title'),
+                stream: ctrl.listBooks(selectedCriteria),
                 builder: (context, snapshot) {
                   switch(snapshot.connectionState){
                     case ConnectionState.none:
@@ -82,27 +93,31 @@ class _ListBookViewState extends State<ListBookView> {
                           itemBuilder: (context, index) {
                             String id = data.docs[index].id;
                             dynamic item = data.docs[index].data();
-                            return SizedBox(
-                              width: 150,
-                              child: Card(
-                                child: ListTile(
-                                  leading: IconButton(
-                                    icon: Icon(Icons.bookmark_add),
-                                    onPressed: () => addBorrowDialog(id, item['title'], item['subtitle']),
+                            if(item['title'].toLowerCase().contains(searchResult.toLowerCase())){
+                              return SizedBox(
+                                width: 150,
+                                child: Card(
+                                  child: ListTile(
+                                    leading: IconButton(
+                                      icon: Icon(Icons.bookmark_add),
+                                      onPressed: () => addBorrowDialog(id, item['title'], item['subtitle']),
+                                    ),
+                                    title: Text(item['title']),
+                                    subtitle: Text(item['subtitle']),
+                                    trailing: IconButton(
+                                      icon: Icon(Icons.delete_outline),
+                                      onPressed: () => addDeleteDialog(id),
+                                    ),
+                                    onTap: () {
+                                      ctrl.currentBookId = id;
+                                      Navigator.pushNamed(context, 'editBook');
+                                    },
                                   ),
-                                  title: Text(item['title']),
-                                  subtitle: Text(item['subtitle']),
-                                  trailing: IconButton(
-                                    icon: Icon(Icons.delete_outline),
-                                    onPressed: () => addDeleteDialog(id),
-                                  ),
-                                  onTap: () {
-                                    ctrl.currentBookId = id;
-                                    Navigator.pushNamed(context, 'editBook');
-                                  },
                                 ),
-                              ),
-                            );
+                              );
+                            }else{
+                              return Visibility(visible: false, child: Text('Nenhum livro encontrado'));
+                            }
                           },
                         );
                       } 
@@ -119,10 +134,45 @@ class _ListBookViewState extends State<ListBookView> {
        */
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'addBook');
+          addOrderByDialog();
         },
-        child: Icon(Icons.add, color: Colors.blue.shade800,),
+        child: Icon(Icons.list, color: Colors.blue.shade800,),
       ),
+    );
+  }
+
+  void addOrderByDialog(){
+    showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text("Ordenar por:"),
+          actions: [
+            DropdownButton<String>(
+              value: selectedCriteria,
+              icon: Icon(Icons.arrow_drop_down),
+              isExpanded: true,
+              onChanged: (String? value) {
+                selectedCriteria = value!;
+                setState(() {
+                  selectedCriteria = value;
+                });
+              },
+              items:
+                orderCriteria.map<DropdownMenuItem<String>>((String value){
+                  return DropdownMenuItem<String>(value: value, child: Text(value));
+                }).toList(),
+            
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancelar", style: TextStyle(fontSize: 18.0),),
+            )
+          ],
+        );
+      }
     );
   }
 

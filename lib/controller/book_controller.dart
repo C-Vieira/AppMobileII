@@ -66,10 +66,11 @@ class BookController extends ChangeNotifier {
       );
   }
 
-  Stream<QuerySnapshot> listBooks(){
+  Stream<QuerySnapshot> listBooks(String field){
     var result = db
       .collection('books')
-      .where('uid');
+      .where('uid')
+      .orderBy(field);
 
     return result.snapshots();
   }

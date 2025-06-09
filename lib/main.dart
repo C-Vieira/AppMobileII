@@ -11,6 +11,7 @@ import 'package:app_mobile2/view/list_book_view.dart';
 import 'package:app_mobile2/view/login_view.dart';
 import 'package:app_mobile2/view/recover_password_view.dart';
 import 'package:app_mobile2/view/register_view.dart';
+import 'package:app_mobile2/view/search_book_view.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class MainApp extends StatelessWidget {
         'viewBooks' : (context) => const ListBookView(),
         'bookDetails' : (context) => const BookDetailsView(),
         'editBook' : (context) => const EditBookView(),
+        'searchBook' : (context) => const SearchBookView(),
       },
     );
   }
