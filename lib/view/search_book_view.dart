@@ -22,7 +22,8 @@ class _SearchBookViewState extends State<SearchBookView> {
   final TextEditingController searchCtrl = TextEditingController();
   String searchResult = '';
 
-  List<String> orderCriteria = <String>['title', 'subtitle', 'category', 'registerDate'];
+  List<String> orderCriteria = <String>['Título', 'Subtítulo', 'Categoria', 'Data de Registro'];
+  String selectedValue = 'Título';
   String selectedCriteria = 'title';
 
   @override
@@ -145,33 +146,53 @@ class _SearchBookViewState extends State<SearchBookView> {
     showDialog(
       context: context,
       builder: (context){
-        return AlertDialog(
-          title: Text("Ordenar por:"),
-          actions: [
-            DropdownButton<String>(
-              value: selectedCriteria,
-              icon: Icon(Icons.arrow_drop_down),
-              isExpanded: true,
-              onChanged: (String? value) {
-                selectedCriteria = value!;
-                setState(() {
-                  selectedCriteria = value;
-                });
-              },
-              items:
-                orderCriteria.map<DropdownMenuItem<String>>((String value){
-                  return DropdownMenuItem<String>(value: value, child: Text(value));
-                }).toList(),
-            
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("Cancelar", style: TextStyle(fontSize: 18.0),),
-            )
-          ],
-        );
+        String dropdownValue = selectedValue;
+        return StatefulBuilder(builder: (dialogContext, dialogSetState){
+          return AlertDialog(
+            title: Text("Ordenar por:"),
+            actions: [
+              DropdownButton<String>(
+                value: dropdownValue,
+                icon: Icon(Icons.arrow_drop_down),
+                isExpanded: true,
+                onChanged: (String? value) {
+                  selectedValue = value!;
+                  
+                  switch(value){
+                    case 'Título':
+                      selectedCriteria = 'title'; break;
+                    case 'Subtítulo':
+                      selectedCriteria = 'subtitle'; break;
+                    case 'Categoria':
+                      selectedCriteria = 'category'; break;
+                    case 'Data de Registro':
+                      selectedCriteria = 'registerDate'; break;
+                    default:
+                      selectedCriteria = 'title'; break;
+                  }
+                  dialogSetState(() {
+                    dropdownValue = value;
+                  });
+                  setState(() {
+                    selectedValue = value;
+                    selectedCriteria;
+                  });
+                },
+                items:
+                  orderCriteria.map<DropdownMenuItem<String>>((String value){
+                    return DropdownMenuItem<String>(value: value, child: Text(value));
+                  }).toList(),
+              
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancelar", style: TextStyle(fontSize: 18.0),),
+              )
+            ],
+          );
+        });
       }
     );
   }
