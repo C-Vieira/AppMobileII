@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView>{
               /*
               *  App Image
               */
-              Image(image: AssetImage('assets/images/books.jpg'), fit: BoxFit.cover),
+              Image(image: AssetImage('assets/images/books.jpg'), fit: BoxFit.fill, height: 280.0, width: 280.0,),
               SizedBox(height: 20.0),
               /*
               *  Email Input Field

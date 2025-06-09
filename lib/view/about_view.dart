@@ -22,7 +22,8 @@ class AboutView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Projeto Parcial - Mobile II", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+            Text("Projeto Final Programação Mobile II", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+            Text("Aplicativo Gerenciador de Livros", style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
             SizedBox(height: 20.0,),
             Text("Trabalho desenvolvido como método avaliativo para a disciplina de Programação Mobile II do curso de Engenharia de Software.", style: TextStyle(fontSize: 18.0), textAlign: TextAlign.justify,),
             SizedBox(height: 20.0,),

@@ -12,7 +12,6 @@ import 'package:app_mobile2/view/login_view.dart';
 import 'package:app_mobile2/view/recover_password_view.dart';
 import 'package:app_mobile2/view/register_view.dart';
 import 'package:app_mobile2/view/search_book_view.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -29,10 +28,11 @@ Future<void> main() async {
   g.registerSingleton<BookLoanController>(BookLoanController());  
 
   runApp(
-    DevicePreview(
+    /*DevicePreview(
       enabled: true,
       builder: (context) => const MainApp()
-    ),
+    ),*/
+    const MainApp(),
   );
 }
 
